@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta de Cadastros</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Consulta de Cadastros</h1>
+      <table id="tabela_pessoas">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Sexo</th>
+            <th>Data Nasc.</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+            <th>Aceitou Termos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script>
+      fetch("/api/pessoa")
+        .then((response) => response.json())
+        .then((data) => {
+          const tbody = document.querySelector("#tabela_pessoas tbody");
+          data.forEach((pessoa) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${pessoa.nome}</td>
+            <td>${pessoa.endereco}</td>
+            <td>${pessoa.sexo}</td>
+            <td>${new Date(pessoa.data_nascimento).toLocaleDateString()}</td>
+            <td>${pessoa.cpf}</td>
+            <td>${pessoa.telefone}</td>
+            <td>${pessoa.email}</td>
+            <td>${pessoa.aceitou_termos ? "Sim" : "Não"}</td>
+            <td>
+              <a href="/editar?id=${pessoa.id}" class="btn-editar">Editar</a>
+            </td>
+            `;
+            tbody.appendChild(row);
+          });
+        });
+    </script>
+  </body>
+</html>
