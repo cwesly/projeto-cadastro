@@ -20,6 +20,7 @@
             <th>Telefone</th>
             <th>E-mail</th>
             <th>Aceitou Termos</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -27,12 +28,12 @@
     </div>
 
     <script>
-      fetch('/api/pessoa')
+      fetch("/api/pessoa")
         .then((response) => response.json())
         .then((data) => {
-          const tbody = document.querySelector('#tabela_pessoas tbody');
-          data.forEach(pessoa => {
-            const row = document.createElement('tr');
+          const tbody = document.querySelector("#tabela_pessoas tbody");
+          data.forEach((pessoa) => {
+            const row = document.createElement("tr");
             row.innerHTML = `
             <td>${pessoa.nome}</td>
             <td>${pessoa.endereco}</td>
@@ -41,7 +42,10 @@
             <td>${pessoa.cpf}</td>
             <td>${pessoa.telefone}</td>
             <td>${pessoa.email}</td>
-            <td>${pessoa.aceitou_termos ? 'Sim' : 'Não'}</td>
+            <td>${pessoa.aceitou_termos ? "Sim" : "Não"}</td>
+            <td>
+              <a href="/editar?id=${pessoa.id}" class="btn-editar">Editar</a>
+            </td>
             `;
             tbody.appendChild(row);
           });
